@@ -1,0 +1,27 @@
+buildscript {
+    ext.kotlin_version = '2.0.21' // Обновляем Kotlin для Gradle 9.x (2.0.x совместим с Dagger 2.51)
+    repositories {
+        google()
+        mavenCentral() // JCenter удаляем
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.9.2' // Обновляем Gradle Plugin для Gradle 9.x
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.4.0'
+        classpath 'androidx.benchmark:benchmark-gradle-plugin:1.3.3'
+// Обновляем Google Services Plugin
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

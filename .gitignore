@@ -1,0 +1,18 @@
+# OS
+.DS_Store
+
+# IDE
+.idea/
+*.iml
+
+# Build artifacts
+build/
+.gradle/
+local.properties
+
+# Run results (генерируются, в репо не храним)
+runs/
+
+# Secrets на всякий случай
+*.jks
+*.keystore
