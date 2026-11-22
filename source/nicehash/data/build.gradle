@@ -1,0 +1,57 @@
+// :data — Android library module. Repository implementations, API providers, converters, Room.
+// Depends only on :domain (never on :app / UI).
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.dev.nicehash.data'
+    compileSdkVersion 35
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    // Room annotation processing lives in this module (entities, DAOs, database)
+    kapt { correctErrorTypes = true }
+}
+
+dependencies {
+    implementation project(':domain')
+
+    // RxJava2
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
+
+    // Room (entities + DAOs + database are defined here, so kapt room-compiler runs here)
+    def room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-rxjava2:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // Joda Time
+    implementation 'joda-time:joda-time:2.9.9'
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    testImplementation 'junit:junit:4.12'
+}

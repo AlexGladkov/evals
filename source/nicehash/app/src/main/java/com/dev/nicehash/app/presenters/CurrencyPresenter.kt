@@ -6,6 +6,7 @@ import com.dev.nicehash.R
 import com.dev.nicehash.app.views.CurrencyView
 import com.dev.nicehash.domain.models.Currency
 import com.dev.nicehash.domain.repositories.ConfigurationRepository
+import com.dev.nicehash.helpers.CurrencyResources
 import com.dev.nicehash.helpers.EnumCollections
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -26,39 +27,39 @@ class CurrencyPresenter(val configurationRepository: ConfigurationRepository): M
         val data = LinkedList<Currency>()
 
         data.add(Currency(id = EnumCollections.Currency.Russian.id,
-                title = EnumCollections.Currency.Russian.titleRes, header = R.string.currency_base,
-                btc = "413.558,23", imgRes = EnumCollections.Currency.Russian.flagRes, prototype = EnumCollections.Currency.Russian))
+                title = CurrencyResources.titleRes(EnumCollections.Currency.Russian), header = R.string.currency_base,
+                btc = "413.558,23", imgRes = CurrencyResources.flagRes(EnumCollections.Currency.Russian), prototype = EnumCollections.Currency.Russian))
 
-        data.add(Currency(id = EnumCollections.Currency.Euro.id, title = EnumCollections.Currency.Euro.titleRes,
-                header = R.string.currency_popular, btc = "5,664", imgRes = EnumCollections.Currency.Euro.flagRes,
+        data.add(Currency(id = EnumCollections.Currency.Euro.id, title = CurrencyResources.titleRes(EnumCollections.Currency.Euro),
+                header = R.string.currency_popular, btc = "5,664", imgRes = CurrencyResources.flagRes(EnumCollections.Currency.Euro),
                 prototype = EnumCollections.Currency.Euro))
-        data.add(Currency(id = EnumCollections.Currency.BritainPound.id, imgRes = EnumCollections.Currency.BritainPound.flagRes,
-                title = EnumCollections.Currency.BritainPound.titleRes, header = -1, btc = "5,104",
+        data.add(Currency(id = EnumCollections.Currency.BritainPound.id, imgRes = CurrencyResources.flagRes(EnumCollections.Currency.BritainPound),
+                title = CurrencyResources.titleRes(EnumCollections.Currency.BritainPound), header = -1, btc = "5,104",
                 prototype = EnumCollections.Currency.BritainPound))
-        data.add(Currency(id = EnumCollections.Currency.USD.id, imgRes = EnumCollections.Currency.USD.flagRes,
-                title = EnumCollections.Currency.USD.titleRes, header = -1, btc = "7,188",
+        data.add(Currency(id = EnumCollections.Currency.USD.id, imgRes = CurrencyResources.flagRes(EnumCollections.Currency.USD),
+                title = CurrencyResources.titleRes(EnumCollections.Currency.USD), header = -1, btc = "7,188",
                 prototype = EnumCollections.Currency.USD))
 
-        data.add(Currency(id = EnumCollections.Currency.Australian.id, title = EnumCollections.Currency.Australian.titleRes,
-                header = R.string.currency_all, btc = "9,344", imgRes = EnumCollections.Currency.Australian.flagRes,
+        data.add(Currency(id = EnumCollections.Currency.Australian.id, title = CurrencyResources.titleRes(EnumCollections.Currency.Australian),
+                header = R.string.currency_all, btc = "9,344", imgRes = CurrencyResources.flagRes(EnumCollections.Currency.Australian),
                 prototype = EnumCollections.Currency.Australian))
-        data.add(Currency(id = EnumCollections.Currency.Belgium.id, title = EnumCollections.Currency.Belgium.titleRes,
-                header = -1, btc = "11,404", imgRes = EnumCollections.Currency.Belgium.flagRes,
+        data.add(Currency(id = EnumCollections.Currency.Belgium.id, title = CurrencyResources.titleRes(EnumCollections.Currency.Belgium),
+                header = -1, btc = "11,404", imgRes = CurrencyResources.flagRes(EnumCollections.Currency.Belgium),
                 prototype = EnumCollections.Currency.Belgium))
-        data.add(Currency(id = EnumCollections.Currency.Canada.id, title = EnumCollections.Currency.Canada.titleRes,
-                header = -1, btc = "9,273", imgRes = EnumCollections.Currency.Canada.flagRes,
+        data.add(Currency(id = EnumCollections.Currency.Canada.id, title = CurrencyResources.titleRes(EnumCollections.Currency.Canada),
+                header = -1, btc = "9,273", imgRes = CurrencyResources.flagRes(EnumCollections.Currency.Canada),
                 prototype = EnumCollections.Currency.Canada))
-        data.add(Currency(id = EnumCollections.Currency.CHF.id, title = EnumCollections.Currency.CHF.titleRes,
-                header = -1, btc = "6,874", imgRes = EnumCollections.Currency.CHF.flagRes,
+        data.add(Currency(id = EnumCollections.Currency.CHF.id, title = CurrencyResources.titleRes(EnumCollections.Currency.CHF),
+                header = -1, btc = "6,874", imgRes = CurrencyResources.flagRes(EnumCollections.Currency.CHF),
                 prototype = EnumCollections.Currency.CHF))
-        data.add(Currency(id = EnumCollections.Currency.China.id, title = EnumCollections.Currency.China.titleRes,
-                header = -1, btc = "45,273", imgRes = EnumCollections.Currency.China.flagRes,
+        data.add(Currency(id = EnumCollections.Currency.China.id, title = CurrencyResources.titleRes(EnumCollections.Currency.China),
+                header = -1, btc = "45,273", imgRes = CurrencyResources.flagRes(EnumCollections.Currency.China),
                 prototype = EnumCollections.Currency.China))
-        data.add(Currency(id = EnumCollections.Currency.Czech.id, title = EnumCollections.Currency.Czech.titleRes,
-                header = -1, btc = "148,404", imgRes = EnumCollections.Currency.Czech.flagRes,
+        data.add(Currency(id = EnumCollections.Currency.Czech.id, title = CurrencyResources.titleRes(EnumCollections.Currency.Czech),
+                header = -1, btc = "148,404", imgRes = CurrencyResources.flagRes(EnumCollections.Currency.Czech),
                 prototype = EnumCollections.Currency.Czech))
-        data.add(Currency(id = EnumCollections.Currency.Dania.id, title = EnumCollections.Currency.Dania.titleRes,
-                header = -1, btc = "43,480.21", imgRes = EnumCollections.Currency.Dania.flagRes,
+        data.add(Currency(id = EnumCollections.Currency.Dania.id, title = CurrencyResources.titleRes(EnumCollections.Currency.Dania),
+                header = -1, btc = "43,480.21", imgRes = CurrencyResources.flagRes(EnumCollections.Currency.Dania),
                 prototype = EnumCollections.Currency.Dania))
 
         viewState.setupView(data = data)

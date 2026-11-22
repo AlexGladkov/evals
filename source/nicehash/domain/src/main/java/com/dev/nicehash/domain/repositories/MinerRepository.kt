@@ -1,6 +1,5 @@
 package com.dev.nicehash.domain.repositories
 
-import com.dev.nicehash.data.providers.models.ApiPayment
 import com.dev.nicehash.domain.models.*
 import io.reactivex.Single
 
