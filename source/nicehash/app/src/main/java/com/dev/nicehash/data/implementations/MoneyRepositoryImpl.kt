@@ -53,10 +53,13 @@ class MoneyRepositoryImpl(val nicehashProvider: NicehashProvider) : MoneyReposit
                             val timestamp = data.time * 300
                             val localDateTime = DateTime(timestamp * 1000).millis
 
+                            val currentSpeed = profitabilityItems[past.algo]?.speed ?: 0.0
+                            // zero current speed would turn the bucket into Infinity/NaN - skip it
+                            if (currentSpeed == 0.0) return@forEach
+
                             val speedObject = data.a
                             val profitability = (profitabilityItems[past.algo]?.price ?: 0.0) *
                                     (profitabilityItems[past.algo]?.speed ?: 0.0)
-                            val currentSpeed = profitabilityItems[past.algo]?.speed ?: 0.0
                             val multi = speedObject / currentSpeed
                             val pastProfitability = multi * profitability
 
@@ -71,11 +74,14 @@ class MoneyRepositoryImpl(val nicehashProvider: NicehashProvider) : MoneyReposit
                     val dayDuration = DateTime().minusDays(1).millis
                     val dayArray = chartItems.filter { it.key > dayDuration }
 
+                    // real number of days in the current month instead of hardcoded 31
+                    val monthDays = DateTime().dayOfMonth().getMaximumValue()
+
 
                     Single.just(Income(hourValue = 0.0,
                             hourBtc = MathUtils.getAverage(collection = dayArray.values) / 24, dayValue = 0.0,
                             dayBtc = MathUtils.getAverage(collection = dayArray.values), monthValue = 0.0,
-                            monthBtc = MathUtils.getAverage(collection = dayArray.values) * 31,
+                            monthBtc = MathUtils.getAverage(collection = dayArray.values) * monthDays,
                             weekValue = 0.0, weekBtc = MathUtils.getAverage(collection = dayArray.values) * 7))
                 }
     }
