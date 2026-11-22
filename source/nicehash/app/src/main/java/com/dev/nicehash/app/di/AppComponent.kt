@@ -7,6 +7,7 @@ import com.dev.nicehash.app.fragments.PayoutsFragment
 import com.dev.nicehash.app.fragments.WorkersFragment
 import com.dev.nicehash.app.views.PurchaseView
 import com.dev.nicehash.base.BaseContainer
+import com.dev.nicehash.domain.repositories.ChatRepository
 import dagger.Component
 import javax.inject.Singleton
 
@@ -40,4 +41,7 @@ interface AppComponent {
     fun inject(fragment: WorkersFragment)
     fun inject(fragment: BalanceFragment)
     fun inject(fragment: IncomeFragment)
+
+    // Provision point for the global chat overlay (consumed by BaseActivity)
+    fun chatRepository(): ChatRepository
 }

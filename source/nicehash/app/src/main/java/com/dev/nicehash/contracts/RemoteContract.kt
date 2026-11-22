@@ -9,6 +9,9 @@ class RemoteContract {
     companion object {
         val baseUrl = "https://api2.nicehash.com/main/api/v2/"
 
+        /** Base url for the support chat service (configurable) */
+        val chatBaseUrl = baseUrl
+
         const val METHOD = "method"
         const val MINER = "addr"
         const val FROM = "from"

@@ -142,4 +142,12 @@
     <string name="navigation_bar_workers_right">Rigs online</string>
     <string name="navigation_bar_income_left">BTC/Day</string>
 
+    <!-- Support chat overlay -->
+    <string name="chat_title">Support chat</string>
+    <string name="chat_toggle_desc">Open support chat</string>
+    <string name="chat_close_desc">Close chat</string>
+    <string name="chat_send_desc">Send message</string>
+    <string name="chat_input_hint">Type a message…</string>
+    <string name="chat_error">Message not delivered. Please try again.</string>
+
 </resources>
