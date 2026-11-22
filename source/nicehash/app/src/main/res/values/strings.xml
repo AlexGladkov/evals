@@ -141,5 +141,6 @@
     <string name="navigation_bar_workers_left">Workers online</string>
     <string name="navigation_bar_workers_right">Rigs online</string>
     <string name="navigation_bar_income_left">BTC/Day</string>
+    <string name="offline_no_cached_data">Offline — no cached data yet. Reconnect to refresh.</string>
 
 </resources>

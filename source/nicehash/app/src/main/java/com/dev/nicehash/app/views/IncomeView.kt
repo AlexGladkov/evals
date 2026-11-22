@@ -12,4 +12,9 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(value = AddToEndSingleStrategy::class)
 interface IncomeView: MvpView {
     fun setupIncome(income: Income, currencyRate: Float, usdRate: Float)
+
+    /**
+     * Shown when network fetch failed and no cached data is available (offline + empty cache).
+     */
+    fun setupOffline()
 }

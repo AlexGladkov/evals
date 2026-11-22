@@ -36,6 +36,8 @@ class IncomePresenter(private val exchangeServer: ExchangeServer,
                             .ExchangeCode.US.value), currencyRate = exchangeServer.fetchRate(code = currency.value))
                 }, { error ->
                     error.printStackTrace()
+                    // offline and no cached data available (repository handles cache fallback)
+                    viewState.setupOffline()
                 })
 
 //        viewState.setupIncome(income = Income(hourBtc = 0.000534, hourValue = exchangeServer

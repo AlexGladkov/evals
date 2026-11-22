@@ -9,7 +9,12 @@ import com.dev.nicehash.data.providers.GeneralProvider
 import com.dev.nicehash.data.providers.MinerProvider
 import com.dev.nicehash.data.providers.NicehashProvider
 import com.dev.nicehash.data.room.RoomAppDataSource
+import com.dev.nicehash.data.room.dao.CachedPayoutsDao
+import com.dev.nicehash.data.room.dao.CachedStatsDao
+import com.dev.nicehash.data.room.dao.CachedWorkersDao
+import com.dev.nicehash.data.room.dao.MinerDao
 import com.dev.nicehash.domain.repositories.*
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -22,12 +27,16 @@ import javax.inject.Singleton
 class RepositoryModule {
 
     @Provides
-    fun provideMinerRepository(appDataSource: RoomAppDataSource, minerProvider: MinerProvider,
+    fun provideMinerRepository(minerDao: MinerDao, minerProvider: MinerProvider,
                                minerConverter: MinerConverter, paymentsConverter: PaymentsConverter,
-                               workerConverter: WorkerConverter, balanceConverter: BalanceConverter): MinerRepository {
-        return MinerRepositoryImpl(appDataSource = appDataSource, minerConverter = minerConverter,
+                               workerConverter: WorkerConverter, balanceConverter: BalanceConverter,
+                               cachedWorkersDao: CachedWorkersDao, cachedPayoutsDao: CachedPayoutsDao,
+                               gson: Gson): MinerRepository {
+        return MinerRepositoryImpl(minerDao = minerDao, minerConverter = minerConverter,
                 minerProvider = minerProvider, paymentsConverter = paymentsConverter,
-                workerConverter = workerConverter, balanceConverter = balanceConverter)
+                workerConverter = workerConverter, balanceConverter = balanceConverter,
+                cachedWorkersDao = cachedWorkersDao, cachedPayoutsDao = cachedPayoutsDao,
+                gson = gson)
     }
 
     @Provides
@@ -57,7 +66,9 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideMoneyRepository(nicehashProvider: NicehashProvider): MoneyRepository {
-        return MoneyRepositoryImpl(nicehashProvider = nicehashProvider)
+    fun provideMoneyRepository(nicehashProvider: NicehashProvider, cachedStatsDao: CachedStatsDao,
+                               gson: Gson): MoneyRepository {
+        return MoneyRepositoryImpl(nicehashProvider = nicehashProvider, cachedStatsDao = cachedStatsDao,
+                gson = gson)
     }
 }

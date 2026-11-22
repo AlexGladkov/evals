@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.dev.nicehash.R
 import com.dev.nicehash.app.App
 import com.dev.nicehash.app.interfaces.RouterProvider
@@ -114,6 +115,11 @@ class IncomeFragment: BaseContainer(), IncomeView {
     }
 
     // MARK: - View implementation
+    @SuppressLint("SetTextI18n")
+    override fun setupOffline() {
+        context?.let { Toast.makeText(it, R.string.offline_no_cached_data, Toast.LENGTH_SHORT).show() }
+    }
+
     @SuppressLint("SetTextI18n")
     override fun setupIncome(income: Income, currencyRate: Float, usdRate: Float) {
 //        txtIncomeHourValue.text = DecimalFormat("##.##").format(income.hourValue)
