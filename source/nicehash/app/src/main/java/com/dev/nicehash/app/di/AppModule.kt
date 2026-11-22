@@ -2,8 +2,6 @@ package com.dev.nicehash.app.di
 
 import android.content.Context
 import com.dev.nicehash.app.App
-import com.dev.nicehash.app.servers.ExchangeServer
-import com.dev.nicehash.app.servers.ExchangeServerImpl
 import com.dev.nicehash.domain.repositories.CurrencyRepository
 import dagger.Module
 import dagger.Provides

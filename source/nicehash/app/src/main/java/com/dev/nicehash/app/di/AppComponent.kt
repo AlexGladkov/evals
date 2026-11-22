@@ -16,7 +16,7 @@ import javax.inject.Singleton
  */
 @Component(
     modules = [AppModule::class, RoomModule::class, ProviderModule::class, NavigationModule::class,
-        FirebaseModule::class, RemoteModule::class, LocalNavigationModule::class, RepositoryModule::class,
+        RemoteModule::class, LocalNavigationModule::class, RepositoryModule::class,
         ConverterModule::class]
 )
 @Singleton

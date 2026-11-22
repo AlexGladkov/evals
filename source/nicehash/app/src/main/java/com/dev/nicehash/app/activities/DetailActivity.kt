@@ -11,7 +11,6 @@ import com.dev.nicehash.base.BaseActivity
 import com.dev.nicehash.databinding.ActivityDetailBinding
 import com.dev.nicehash.domain.models.Balance
 import com.dev.nicehash.enums.Keys
-import com.dev.nicehash.enums.Theme
 import com.dev.nicehash.helpers.PaintUtils
 import com.dev.nicehash.helpers.WindowUtils
 import com.github.mikephil.charting.components.AxisBase
@@ -174,18 +173,7 @@ class DetailActivity: BaseActivity(), DetailView {
             R.color.light_chart_selection_line
         })
 
-        dataSet.fillDrawable = ContextCompat.getDrawable(applicationContext, when (App.theme) {
-            Theme.LightBlue -> R.drawable.light_chart_gradient_blue
-            Theme.LightGreen -> R.drawable.light_chart_gradient_green
-            Theme.LightOrange -> R.drawable.light_chart_gradient_orange
-            Theme.LightRed -> R.drawable.light_chart_gradient_red
-            Theme.LightPurple -> R.drawable.light_chart_gradient_purple
-            Theme.DarkPurple -> R.drawable.dark_chart_gradient_purple
-            Theme.DarkRed -> R.drawable.dark_chart_gradient_red
-            Theme.DarkOrange -> R.drawable.dark_chart_gradient_orange
-            Theme.DarkGreen -> R.drawable.dark_chart_gradient_green
-            Theme.DarkBlue -> R.drawable.dark_chart_gradient_blue
-        })
+        dataSet.fillDrawable = ContextCompat.getDrawable(applicationContext, PaintUtils.getChartGradient())
 
         dataSet.color = ContextCompat.getColor(applicationContext, PaintUtils.getColorByTheme())
 

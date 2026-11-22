@@ -5,7 +5,6 @@ import com.dev.nicehash.app.servers.ExchangeServerImpl
 import com.dev.nicehash.data.converters.*
 import com.dev.nicehash.data.implementations.*
 import com.dev.nicehash.data.providers.CurrencyProvider
-import com.dev.nicehash.data.providers.GeneralProvider
 import com.dev.nicehash.data.providers.MinerProvider
 import com.dev.nicehash.data.providers.NicehashProvider
 import com.dev.nicehash.data.room.RoomAppDataSource
@@ -42,11 +41,6 @@ class RepositoryModule {
     fun provideConfigurationRepository(appDataSource: RoomAppDataSource,
                                        configurationConverter: ConfigurationConverter): ConfigurationRepository {
         return ConfigurationRepositoryImpl(appDataSource = appDataSource, configurationConverter = configurationConverter)
-    }
-
-    @Provides
-    fun provideGeneralRepository(generalProvider: GeneralProvider): GeneralRepository {
-        return GeneralRepositoryImpl(generalProvider = generalProvider)
     }
 
     @Provides

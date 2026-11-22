@@ -1,6 +1,5 @@
 package com.dev.nicehash.data.implementations
 
-import android.util.Log
 import com.dev.nicehash.data.converters.ConfigurationConverter
 import com.dev.nicehash.data.room.RoomAppDataSource
 import com.dev.nicehash.domain.models.Configuration
@@ -13,7 +12,6 @@ import io.reactivex.Single
  */
 class ConfigurationRepositoryImpl(val appDataSource: RoomAppDataSource,
                                   val configurationConverter: ConfigurationConverter) : ConfigurationRepository {
-    private val TAG = ConfigurationRepositoryImpl::class.java.simpleName
 
     override fun fetchConfiguration(): Single<Configuration> {
         return Single.create { subscriber ->
@@ -36,7 +34,6 @@ class ConfigurationRepositoryImpl(val appDataSource: RoomAppDataSource,
     override fun updateConfiguration(configuration: Configuration): Single<Boolean> {
         return Single.create { subscriber ->
             try {
-//                Log.e(TAG, "configuration $configuration")
                 appDataSource.configurationDao.addConfiguration(minerEntity = configurationConverter
                         .modelToDB(configuration = configuration))
                 subscriber.onSuccess(true)

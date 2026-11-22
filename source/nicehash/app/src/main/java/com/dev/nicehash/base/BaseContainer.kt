@@ -26,27 +26,30 @@ abstract class BaseContainer: MvpAppCompatFragment(), RouterProvider, BackButton
     abstract fun doubleTap()
     abstract fun updateContainer()
 
+    companion object {
+        /**
+         * Shared factory for tab fragments — packs the standard arguments bundle
+         * once instead of duplicating the same code in every fragment (DRY)
+         */
+        inline fun <reified T : BaseContainer> getNewInstance(name: String, miner: String, minerID: Int): T {
+            val fragment = T::class.java.getDeclaredConstructor().newInstance()
+            val args = Bundle()
+            args.putString(Keys.Name.value, name)
+            args.putString(Keys.Miner.value, miner)
+            args.putInt(Keys.MinerID.value, minerID)
+
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         App.appComponent.inject(this@BaseContainer)
         super.onCreate(savedInstanceState)
     }
 
-    override fun onResume() {
-        super.onResume()
-//        getCicerone().navigatorHolder.setNavigator(getNavigator())
-    }
-
-    override fun onPause() {
-//        getCicerone().navigatorHolder.removeNavigator()
-        super.onPause()
-    }
-
     private fun getCicerone(): Cicerone<Router> {
         return ciceroneHolder.getCicerone(containerName.toString())
-    }
-
-    open fun getNavigator(): Navigator? {
-        throw NotImplementedError()
     }
 
     // MARK: - BackButtonListener implementation

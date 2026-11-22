@@ -37,26 +37,6 @@ class CurrencyAdapter : BaseAdapter<Currency>() {
 
     fun performPopularClicked(model: Currency) {
         if (getItems()[4].id == EnumCollections.Currency.Australian.id) {
-//            getItems().firstOrNull { currency -> model.id == currency.id }?.let {
-//                removeItemAt(getItems().indexOf(it))
-//            }
-//            removeItemAt(position = 1)
-//            removeItemAt(position = 1)
-//            removeItemAt(position = 1)
-//
-//            when (model.id) {
-//                EnumCollections.Currency.Euro.id -> {
-//
-//                }
-//
-//                EnumCollections.Currency.USD.id -> {
-//
-//                }
-//
-//                EnumCollections.Currency.BritainPound.id -> {
-//
-//                }
-//            }
         } else {
             removeItemAt(position = 1)
             removeItemAt(position = 1)

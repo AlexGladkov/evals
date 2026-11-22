@@ -3,7 +3,6 @@ package com.dev.nicehash.app.activities
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +18,6 @@ import com.dev.nicehash.app.App
 import com.dev.nicehash.app.fragments.*
 import com.dev.nicehash.app.interfaces.RouterProvider
 import com.dev.nicehash.app.presenters.MainPresenter
-import com.dev.nicehash.app.servers.ExchangeServer
-import com.dev.nicehash.app.servers.ExchangeServerImpl
 import com.dev.nicehash.app.views.MainView
 import com.dev.nicehash.base.BaseActivity
 import com.dev.nicehash.databinding.ActivityMainBinding
@@ -29,7 +26,6 @@ import com.dev.nicehash.domain.models.Configuration
 import com.dev.nicehash.domain.repositories.MinerRepository
 import com.dev.nicehash.enums.Keys
 import com.dev.nicehash.enums.ScreenKeys
-import com.dev.nicehash.enums.Theme
 import com.dev.nicehash.helpers.PaintUtils
 import com.dev.nicehash.helpers.SizeContract
 import com.dev.nicehash.helpers.WindowUtils
@@ -61,7 +57,6 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
     @Inject lateinit var routerMain: Router
     @Inject lateinit var navigatorHolder: NavigatorHolder
     @Inject lateinit var minerRepository: MinerRepository
-    @Inject lateinit var exchangeServer: ExchangeServer
 
     // MARK: - Presenter setup
     @InjectPresenter
@@ -95,7 +90,6 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
     private fun applyCommand(command: Command) {
         when (command) {
             is Back -> finish()
-//            is SystemMessage -> Toast.makeText(applicationContext, command.message, Toast.LENGTH_SHORT).show()
             is Replace -> {
                 when (command.screen.screenKey) {
                     ScreenKeys.Choose.value -> {
@@ -103,52 +97,6 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                         chooseIntent.putExtra(Keys.Configuration.value, currentConfiguration)
                         startActivity(chooseIntent)
                         overridePendingTransition(0, 0)
-                    }
-
-                    ScreenKeys.Detail.value -> {
-//                        val balance = (command.transitionData as? Balance)
-//                        balance.let {
-//                            val detailIntent = Intent(applicationContext, DetailActivity::class.java)
-//                            detailIntent.putExtra(Keys.Balance.value, it)
-//                            startActivity(detailIntent)
-//                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-//                        }
-                    }
-
-                    ScreenKeys.Income.value -> {
-//                        supportFragmentManager.beginTransaction()
-//                                .detach(balanceFragment)
-//                                .detach(payoutsFragment)
-//                                .detach(workersFragment)
-//                                .attach(incomeFragment)
-//                                .commitNow()
-                    }
-
-                    ScreenKeys.Balance.value -> {
-//                        supportFragmentManager.beginTransaction()
-//                                .detach(incomeFragment)
-//                                .detach(payoutsFragment)
-//                                .detach(workersFragment)
-//                                .attach(balanceFragment)
-//                                .commitNow()
-                    }
-
-                    ScreenKeys.Payouts.value -> {
-//                        supportFragmentManager.beginTransaction()
-//                                .detach(balanceFragment)
-//                                .detach(incomeFragment)
-//                                .detach(workersFragment)
-//                                .attach(payoutsFragment)
-//                                .commitNow()
-                    }
-
-                    ScreenKeys.Workers.value -> {
-//                        supportFragmentManager.beginTransaction()
-//                                .detach(balanceFragment)
-//                                .detach(payoutsFragment)
-//                                .detach(incomeFragment)
-//                                .attach(workersFragment)
-//                                .commitNow()
                     }
                 }
             }

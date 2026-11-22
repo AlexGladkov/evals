@@ -1,6 +1,5 @@
 package com.dev.nicehash.app.servers
 
-import android.util.Log
 import com.dev.nicehash.domain.models.ExchangeRate
 import com.dev.nicehash.domain.repositories.CurrencyRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,15 +12,14 @@ import javax.inject.Singleton
  * Implementation for ExchangeServer
  */
 class ExchangeServerImpl(val currencyRepository: CurrencyRepository): ExchangeServer {
-    private val TAG = ExchangeServerImpl::class.java.simpleName
-
-    public enum class ExchangeCode(val value: String) {
-        Ru("RUB"), US("USD")
-    }
 
     companion object {
-        private val data = ArrayList<ExchangeRate>()
+        private const val RATE_NOT_FOUND = -1f
     }
+
+    // Exchange rates cache. Instance state instead of static companion state
+    // (the class is an injected singleton, so behavior is unchanged)
+    private val data = ArrayList<ExchangeRate>()
 
     init {
         currencyRepository.fetchExchangeRatesFromDB()
@@ -51,7 +49,7 @@ class ExchangeServerImpl(val currencyRepository: CurrencyRepository): ExchangeSe
     override fun convertBtcFor(code: String, value: Double): Float {
         val rate = data.firstOrNull { it.code == code }
         return if (rate == null) {
-            -1f
+            RATE_NOT_FOUND
         } else {
             (rate.value * value).toFloat()
         }
@@ -59,6 +57,6 @@ class ExchangeServerImpl(val currencyRepository: CurrencyRepository): ExchangeSe
 
     override fun fetchRate(code: String): Float {
         val rate = data.firstOrNull { it.code == code }
-        return rate?.value?.toFloat() ?: -1f
+        return rate?.value?.toFloat() ?: RATE_NOT_FOUND
     }
 }

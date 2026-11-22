@@ -1,4 +1,4 @@
-package com.dev.nicehash
+package com.dev.nicehash.helpers
 
 import android.util.Log
 

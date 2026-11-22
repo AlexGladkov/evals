@@ -11,8 +11,6 @@ import io.reactivex.Single
  * Provider for accessing base miner info
  */
 interface MinerProvider {
-    fun getStatistics(miner: String, time: Long)
-
     /**
      * @return array of chart items to display
      * @param miner - wallet id

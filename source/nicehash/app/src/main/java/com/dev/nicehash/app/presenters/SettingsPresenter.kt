@@ -17,19 +17,6 @@ import moxy.MvpPresenter
 @InjectViewState
 class SettingsPresenter(val router: Router, private val configurationRepository: ConfigurationRepository): MvpPresenter<SettingsView>() {
 
-    fun performClick(id: Int) {
-//        when (id) {
-//            0 -> router.replaceScreen(ScreenKeys.Notifications.value)
-//            1 -> router.replaceScreen(ScreenKeys.Themes.value)
-//            2 -> router.replaceScreen(ScreenKeys.Tab.value)
-//            3 -> router.replaceScreen(ScreenKeys.Language.value)
-//            4 -> router.replaceScreen(ScreenKeys.Currencies.value)
-//            5 -> router.replaceScreen(ScreenKeys.Service.value)
-//            6 -> router.replaceScreen(ScreenKeys.Purchases.value)
-//            7 -> router.replaceScreen(ScreenKeys.About.value)
-//        }
-    }
-
     @SuppressLint("CheckResult")
     fun fetchConfiguration() {
         configurationRepository.fetchConfiguration()
