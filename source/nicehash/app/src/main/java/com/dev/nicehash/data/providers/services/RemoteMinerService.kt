@@ -45,4 +45,7 @@ interface RemoteMinerService {
     fun getWorkerHistory(@Query(RemoteContract.METHOD) method: String,
                          @Query(RemoteContract.MINER) miner: String,
                          @Query(RemoteContract.FROM) from: Long): Single<ApiResponse>
+
+    @GET("./api")
+    fun getOrders(@Query(RemoteContract.METHOD) method: String = "orders.get"): Single<ApiResponse>
 }

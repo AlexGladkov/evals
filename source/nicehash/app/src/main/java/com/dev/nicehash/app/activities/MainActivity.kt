@@ -74,6 +74,7 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
     private var balanceFragment: BalanceFragment? = null
     private var payoutsFragment: PayoutsFragment? = null
     private var workersFragment: WorkersFragment? = null
+    private var marketFragment: MarketFragment? = null
 
     // MARK: - Variables
     private var currentPosition = 0
@@ -203,6 +204,7 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                 .add("", DummyFragment::class.java)
                 .add("", DummyFragment::class.java)
                 .add("", DummyFragment::class.java)
+                .add("", DummyFragment::class.java)
                 .create())
 
         binding.stbMain.setCustomTabView(this)
@@ -225,6 +227,7 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                     1 -> textView.text = getString(R.string.tab_balance)
                     2 -> textView.text = getString(R.string.tab_payouts)
                     3 -> textView.text = getString(R.string.tab_workers)
+                    4 -> textView.text = getString(R.string.tab_market)
                 }
 
                 oldView.background = ContextCompat.getDrawable(applicationContext,
@@ -357,6 +360,15 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                     .detach(workersFragment!!)
                     .commitNow()
         }
+
+        marketFragment = supportFragmentManager.findFragmentByTag(ScreenKeys.Market.value) as? MarketFragment
+        if (marketFragment == null) {
+            marketFragment = MarketFragment.getNewInstance(name = ScreenKeys.Market.value)
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.flMain, marketFragment!!, ScreenKeys.Market.value)
+                    .detach(marketFragment!!)
+                    .commitNow()
+        }
     }
 
     override fun onResumeFragments() {
@@ -411,6 +423,7 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
             1 -> textView.text = getString(R.string.tab_balance)
             2 -> textView.text = getString(R.string.tab_payouts)
             3 -> textView.text = getString(R.string.tab_workers)
+            4 -> textView.text = getString(R.string.tab_market)
         }
 
         if (currentPosition != position) textView.alpha = 0.3f
@@ -442,6 +455,10 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                 binding.txtMainNavLeftSubtitle.text = getString(R.string.navigation_bar_workers_left)
                 binding.txtMainNavRightSubtitle.text = getString(R.string.navigation_bar_workers_right)
             }
+            4 -> {
+                binding.txtMainNavLeftSubtitle.text = getString(R.string.navigation_bar_market_left)
+                binding.txtMainNavRightSubtitle.text = getString(R.string.navigation_bar_market_right)
+            }
         }
     }
 
@@ -461,6 +478,8 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                     bottomBlockHeight = WindowUtils.convertDpToPixel(63f + 63f + 40f, applicationContext),
                     topBlockHeight = WindowUtils.convertDpToPixel(72f + 40f + 80f, applicationContext))
             3 -> mainPresenter.measureChartHeight(screenHeight = screenHeight.toFloat(),
+                    bottomBlockHeight = 0f, topBlockHeight = 0f)
+            4 -> mainPresenter.measureChartHeight(screenHeight = screenHeight.toFloat(),
                     bottomBlockHeight = 0f, topBlockHeight = 0f)
         }
 
