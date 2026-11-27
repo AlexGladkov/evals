@@ -18,6 +18,7 @@ import com.dev.nicehash.R
 import com.dev.nicehash.app.App
 import com.dev.nicehash.app.compose.IncomeScreen
 import com.dev.nicehash.app.interfaces.RouterProvider
+import com.dev.nicehash.app.servers.ExchangeCode
 import com.dev.nicehash.app.servers.ExchangeServer
 import com.dev.nicehash.app.servers.ExchangeServerImpl
 import com.dev.nicehash.app.viewmodels.IncomeViewModel
@@ -86,8 +87,8 @@ class IncomeFragment : BaseContainer() {
                     onIncomeLoaded = { income -> onIncomeLoaded(income) })
         }
 
-        incomeViewModel.fetchIncome(currencyCode = ExchangeServerImpl.ExchangeCode.US.value,
-                currencyValue = ExchangeServerImpl.ExchangeCode.Ru.value,
+        incomeViewModel.fetchIncome(currencyCode = ExchangeCode.US.value,
+                currencyValue = ExchangeCode.Ru.value,
                 miner = arguments?.getString(Keys.Miner.value).orEmpty())
     }
 
