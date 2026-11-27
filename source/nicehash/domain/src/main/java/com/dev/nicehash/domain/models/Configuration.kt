@@ -1,6 +1,5 @@
 package com.dev.nicehash.domain.models
 
-import android.os.Parcelable
 import com.dev.nicehash.enums.Theme
 import com.dev.nicehash.helpers.EnumCollections
 import java.io.Serializable

@@ -61,7 +61,9 @@ class ChoosePresenter(val router: Router, val minerRepository: MinerRepository,
     }
 
     fun editClick(miner: Miner) {
-
+        val bundle = Bundle()
+        bundle.putSerializable(Keys.Miner.value, miner) // Miner no longer Parcelable: domain module is Android-free
+//        router.replaceScreen(ScreenKeys.Edit.value, bundle)
     }
 
     fun deleteClick(miner: Miner) {
