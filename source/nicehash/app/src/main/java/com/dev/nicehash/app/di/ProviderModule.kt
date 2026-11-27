@@ -2,10 +2,12 @@ package com.dev.nicehash.app.di
 
 import com.dev.nicehash.data.providers.CurrencyProvider
 import com.dev.nicehash.data.providers.GeneralProvider
+import com.dev.nicehash.data.providers.MarketProvider
 import com.dev.nicehash.data.providers.MinerProvider
 import com.dev.nicehash.data.providers.NicehashProvider
 import com.dev.nicehash.data.providers.implementations.CurrencyProviderImpl
 import com.dev.nicehash.data.providers.implementations.GeneralProviderImpl
+import com.dev.nicehash.data.providers.implementations.MarketProviderImpl
 import com.dev.nicehash.data.providers.implementations.MinerProviderImpl
 import com.dev.nicehash.data.providers.implementations.NicehashProviderImpl
 import com.dev.nicehash.data.providers.services.RemoteCurrencyService
@@ -42,5 +44,10 @@ class ProviderModule {
     @Provides
     fun createCurrencyProvider(remoteCurrencyService: RemoteCurrencyService): CurrencyProvider {
         return CurrencyProviderImpl(remoteCurrencyService = remoteCurrencyService)
+    }
+
+    @Provides
+    fun createMarketProvider(remoteMinerService: RemoteMinerService): MarketProvider {
+        return MarketProviderImpl(remoteMinerService = remoteMinerService)
     }
 }

@@ -9,5 +9,5 @@ enum class ScreenKeys(val value: String) {
     Tab("TabKey"), Language("LanguageKey"), Currencies("CurrenciesKey"), Service("ServiceKey"),
     Purchases("PurchasesKey"), About("AboutKey"), Income("IncomeKey"), Workers("WorkersKey"),
     Balance("BalanceKey"), Payouts("PayoutsKey"), Add("AddKey"), Edit("EditKey"), Detail("DetailKey"),
-    Splash("SplashKey")
+    Splash("SplashKey"), Market("MarketKey")
 }

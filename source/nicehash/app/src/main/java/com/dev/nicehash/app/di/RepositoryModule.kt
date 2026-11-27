@@ -6,6 +6,7 @@ import com.dev.nicehash.data.converters.*
 import com.dev.nicehash.data.implementations.*
 import com.dev.nicehash.data.providers.CurrencyProvider
 import com.dev.nicehash.data.providers.GeneralProvider
+import com.dev.nicehash.data.providers.MarketProvider
 import com.dev.nicehash.data.providers.MinerProvider
 import com.dev.nicehash.data.providers.NicehashProvider
 import com.dev.nicehash.data.room.RoomAppDataSource
@@ -59,5 +60,11 @@ class RepositoryModule {
     @Singleton
     fun provideMoneyRepository(nicehashProvider: NicehashProvider): MoneyRepository {
         return MoneyRepositoryImpl(nicehashProvider = nicehashProvider)
+    }
+
+    @Provides
+    fun provideMarketRepository(marketProvider: MarketProvider,
+                                marketConverter: MarketConverter): MarketRepository {
+        return MarketRepositoryImpl(marketProvider = marketProvider, marketConverter = marketConverter)
     }
 }

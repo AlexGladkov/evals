@@ -3,6 +3,7 @@ package com.dev.nicehash.app.di
 import com.dev.nicehash.app.activities.*
 import com.dev.nicehash.app.fragments.BalanceFragment
 import com.dev.nicehash.app.fragments.IncomeFragment
+import com.dev.nicehash.app.fragments.MarketFragment
 import com.dev.nicehash.app.fragments.PayoutsFragment
 import com.dev.nicehash.app.fragments.WorkersFragment
 import com.dev.nicehash.app.views.PurchaseView
@@ -40,4 +41,5 @@ interface AppComponent {
     fun inject(fragment: WorkersFragment)
     fun inject(fragment: BalanceFragment)
     fun inject(fragment: IncomeFragment)
+    fun inject(fragment: MarketFragment)
 }
