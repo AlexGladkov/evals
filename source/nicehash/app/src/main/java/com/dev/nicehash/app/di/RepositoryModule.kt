@@ -10,6 +10,7 @@ import com.dev.nicehash.data.providers.MarketProvider
 import com.dev.nicehash.data.providers.MinerProvider
 import com.dev.nicehash.data.providers.NicehashProvider
 import com.dev.nicehash.data.room.RoomAppDataSource
+import com.dev.nicehash.domain.IncomeCalculator
 import com.dev.nicehash.domain.repositories.*
 import dagger.Module
 import dagger.Provides
@@ -57,9 +58,16 @@ class RepositoryModule {
     }
 
     @Provides
+    fun provideIncomeCalculator(): IncomeCalculator {
+        return IncomeCalculator()
+    }
+
+    @Provides
     @Singleton
-    fun provideMoneyRepository(nicehashProvider: NicehashProvider): MoneyRepository {
-        return MoneyRepositoryImpl(nicehashProvider = nicehashProvider)
+    fun provideMoneyRepository(nicehashProvider: NicehashProvider,
+                               incomeCalculator: IncomeCalculator): MoneyRepository {
+        return MoneyRepositoryImpl(nicehashProvider = nicehashProvider,
+                incomeCalculator = incomeCalculator)
     }
 
     @Provides
