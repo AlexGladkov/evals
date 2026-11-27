@@ -85,6 +85,10 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.8.2'
     debugImplementation 'androidx.compose.ui:ui-tooling'
 
+    // Lifecycle (Income ViewModel migration; runtime also provides ViewTree owners for Compose)
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.6.1'
+
     // UI Part
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
