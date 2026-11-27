@@ -5,24 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.Toast
 import com.dev.nicehash.R
 import com.dev.nicehash.app.App
 import com.dev.nicehash.app.adapters.MinerAdapter
 import com.dev.nicehash.app.interfaces.RouterProvider
 import com.dev.nicehash.app.presenters.ChoosePresenter
 import com.dev.nicehash.app.views.ChooseView
-import com.dev.nicehash.base.BaseActivity
 import com.dev.nicehash.base.BaseAdapterCallback
 import com.dev.nicehash.domain.models.Configuration
 import com.dev.nicehash.domain.models.Miner
 import com.dev.nicehash.domain.repositories.ConfigurationRepository
 import com.dev.nicehash.domain.repositories.MinerRepository
 import com.dev.nicehash.enums.Keys
+import com.dev.nicehash.enums.statusBarColorRes
 import com.dev.nicehash.enums.ScreenKeys
-import com.dev.nicehash.enums.Theme
-import com.dev.nicehash.helpers.EnumCollections
-import com.dev.nicehash.helpers.ListConfig
 import com.github.terrakok.cicerone.Back
 import com.github.terrakok.cicerone.Command
 import com.github.terrakok.cicerone.Navigator
@@ -78,7 +74,6 @@ class ChooseActivity: MvpAppCompatActivity(), RouterProvider, ChooseView {
     private fun applyCommand(command: Command) {
         when (command) {
             is Back -> finish()
-//            is SystemMessage -> Toast.makeText(applicationContext, command.message, Toast.LENGTH_SHORT).show()
             is Replace -> {
                 when (command.screen.screenKey) {
                     ScreenKeys.Settings.value -> {
@@ -97,14 +92,6 @@ class ChooseActivity: MvpAppCompatActivity(), RouterProvider, ChooseView {
                     ScreenKeys.Add.value -> {
                         startActivity(Intent(applicationContext, AddActivity::class.java))
                     }
-
-                    ScreenKeys.Edit.value -> {
-//                        (command.transitionData as? Bundle)?.let {
-//                            val editIntent = Intent(applicationContext, AddActivity::class.java)
-//                            editIntent.putExtra(Keys.Miner.value, it)
-//                            startActivity(editIntent)
-//                        }
-                    }
                 }
             }
         }
@@ -116,14 +103,7 @@ class ChooseActivity: MvpAppCompatActivity(), RouterProvider, ChooseView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        setStatusBarColor(when {
-            App.theme == Theme.DarkPurple -> R.color.dark_status_bar_color
-            App.theme == Theme.DarkBlue -> R.color.dark_status_bar_color
-            App.theme == Theme.DarkRed -> R.color.dark_status_bar_color
-            App.theme == Theme.DarkOrange -> R.color.dark_status_bar_color
-            App.theme == Theme.DarkGreen -> R.color.dark_status_bar_color
-            else -> R.color.light_status_bar_color
-        })
+        setStatusBarColor(App.theme.statusBarColorRes)
 
         choosePresenter.handleConfiguration(extras = intent?.extras)
 
@@ -137,49 +117,6 @@ class ChooseActivity: MvpAppCompatActivity(), RouterProvider, ChooseView {
             }
         })
 
-        when (App.theme) {
-            Theme.DarkGreen -> {
-//                tbChoose.background = ContextCompat.getDrawable(applicationContext, R.color.dark_background_primary)
-//                btnChooseSettings.setColorFilter(ContextCompat.getColor(applicationContext, R.color.dark_tint_color))
-//                imgChooseAdd.setColorFilter(ContextCompat.getColor(applicationContext, R.color.dark_tint_color))
-            }
-            Theme.DarkOrange -> {
-//                tbChoose.background = ContextCompat.getDrawable(applicationContext, R.color.dark_background_primary)
-//                btnChooseSettings.setColorFilter(ContextCompat.getColor(applicationContext, R.color.dark_tint_color))
-//                imgChooseAdd.setColorFilter(ContextCompat.getColor(applicationContext, R.color.dark_tint_color))
-            }
-            Theme.DarkRed -> {
-//                tbChoose.background = ContextCompat.getDrawable(applicationContext, R.color.dark_background_primary)
-//                btnChooseSettings.setColorFilter(ContextCompat.getColor(applicationContext, R.color.dark_tint_color))
-//                imgChooseAdd.setColorFilter(ContextCompat.getColor(applicationContext, R.color.dark_tint_color))
-            }
-            Theme.DarkPurple -> {
-//                tbChoose.background = ContextCompat.getDrawable(applicationContext, R.color.dark_background_primary)
-//                btnChooseSettings.setColorFilter(ContextCompat.getColor(applicationContext, R.color.dark_tint_color))
-//                imgChooseAdd.setColorFilter(ContextCompat.getColor(applicationContext, R.color.dark_tint_color))
-            }
-            Theme.DarkBlue -> {
-//                tbChoose.background = ContextCompat.getDrawable(applicationContext, R.color.dark_background_primary)
-//                btnChooseSettings.setColorFilter(ContextCompat.getColor(applicationContext, R.color.dark_tint_color))
-//                imgChooseAdd.setColorFilter(ContextCompat.getColor(applicationContext, R.color.dark_tint_color))
-            }
-            else -> {
-//                tbChoose.background = ContextCompat.getDrawable(applicationContext, R.color.light_background_primary)
-//                btnChooseSettings.setColorFilter(ContextCompat.getColor(applicationContext, R.color.light_tint_color))
-//                imgChooseAdd.setColorFilter(ContextCompat.getColor(applicationContext, R.color.light_tint_color))
-            }
-        }
-
-//        flChoose.setOnClickListener { onBackPressed() }
-//        imgChooseAdd.setOnClickListener { choosePresenter.onAddClick() }
-//
-//        val listConfig = ListConfig.Builder(mAdapter)
-//                .setHasFixedSize(true)
-//                .setHasNestedScroll(false)
-//                .build(applicationContext)
-//        listConfig.applyConfig(applicationContext, recyclerMiners)
-//
-//        btnChooseSettings.setOnClickListener { choosePresenter.onGearClick() }
     }
 
     override fun onBackPressed() {

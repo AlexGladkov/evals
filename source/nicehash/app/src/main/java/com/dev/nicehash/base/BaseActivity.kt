@@ -3,11 +3,14 @@ package com.dev.nicehash.base
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.FrameLayout
 import com.dev.nicehash.R
 import com.dev.nicehash.app.App
-import com.dev.nicehash.enums.Theme
+import com.dev.nicehash.enums.statusBarColorRes
+import com.dev.nicehash.enums.styleRes
 import android.app.Activity
 import android.graphics.Color
+import io.reactivex.disposables.CompositeDisposable
 import moxy.MvpAppCompatActivity
 
 
@@ -17,34 +20,52 @@ import moxy.MvpAppCompatActivity
  */
 abstract class BaseActivity : MvpAppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        when (App.theme) {
-            Theme.LightBlue -> setTheme(R.style.LightBlueTheme)
-            Theme.LightGreen -> setTheme(R.style.LightGreenTheme)
-            Theme.LightOrange -> setTheme(R.style.LightOrangeTheme)
-            Theme.LightRed -> setTheme(R.style.LightRedTheme)
-            Theme.LightPurple -> setTheme(R.style.LightPurpleTheme)
-            Theme.DarkBlue -> setTheme(R.style.DarkBlueTheme)
-            Theme.DarkGreen -> setTheme(R.style.DarkGreenTheme)
-            Theme.DarkOrange -> setTheme(R.style.DarkOrangeTheme)
-            Theme.DarkRed -> setTheme(R.style.DarkRedTheme)
-            Theme.DarkPurple -> setTheme(R.style.DarkPurpleTheme)
-        }
+    /** Global chat overlay (hosted on top of every screen's content) */
+    private var chatOverlay: ChatOverlayView? = null
+    private val chatDisposables = CompositeDisposable()
 
-        App.isDark = App.theme == Theme.DarkBlue || App.theme == Theme.DarkPurple ||
-                App.theme == Theme.DarkRed || App.theme == Theme.DarkOrange || App.theme == Theme.DarkGreen
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(App.theme.styleRes)
+        App.isDark = App.theme.isDark
 
         super.onCreate(savedInstanceState)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
-        setStatusBarColor(when {
-            App.theme == Theme.DarkPurple -> R.color.dark_status_bar_color
-            App.theme == Theme.DarkBlue -> R.color.dark_status_bar_color
-            App.theme == Theme.DarkRed -> R.color.dark_status_bar_color
-            App.theme == Theme.DarkOrange -> R.color.dark_status_bar_color
-            App.theme == Theme.DarkGreen -> R.color.dark_status_bar_color
-            else -> R.color.light_status_bar_color
-        })
+        setStatusBarColor(App.theme.statusBarColorRes)
+    }
+
+    /**
+     * Wrap the inflated layout so every screen automatically hosts the global
+     * chat overlay (FAB + panel) next to its normal content. Screens themselves
+     * stay untouched.
+     */
+    override fun setContentView(layoutResID: Int) {
+        setContentView(view = layoutInflater.inflate(layoutResID, null))
+    }
+
+    override fun setContentView(view: View) {
+        val wrapper = FrameLayout(this)
+        wrapper.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT)
+        wrapper.addView(view)
+
+        chatOverlay = ChatOverlayView(this)
+        wrapper.addView(chatOverlay)
+
+        super.setContentView(wrapper)
+        setupChatOverlay()
+    }
+
+    /** Fetch the app-scoped ChatRepository from DI and wire it to the overlay */
+    private fun setupChatOverlay() {
+        chatDisposables.clear()
+        chatOverlay?.bind(repository = App.appComponent.chatRepository(), disposables = chatDisposables)
+    }
+
+    override fun onDestroy() {
+        chatDisposables.clear()
+        chatOverlay = null
+        super.onDestroy()
     }
 
     private fun setStatusBarColor(color: Int) {

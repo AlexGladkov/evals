@@ -25,14 +25,6 @@ class PurchasesActivity: BaseActivity(), PurchaseView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_purchases)
 
-//        imgPurchasesBack.setOnClickListener { onBackPressed() }
-//
-//        btnPurchaseThemes.setOnClickListener { purchasePresenter.performBuy(index = 0) }
-//        btnPurchaseAddMiner.setOnClickListener { purchasePresenter.performBuy(index = 1) }
-//        btnPurchaseRemoveAds.setOnClickListener { purchasePresenter.performBuy(index = 2) }
-//        btnPurchaseSilver.setOnClickListener { purchasePresenter.performBuy(index = 3) }
-//        btnPurchaseGold.setOnClickListener { purchasePresenter.performBuy(index = 4) }
-
         purchasePresenter.checkAvailability(isAvailable = BillingProcessor.isIabServiceAvailable(applicationContext))
     }
 

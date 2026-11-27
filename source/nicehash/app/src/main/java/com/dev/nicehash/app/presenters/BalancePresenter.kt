@@ -1,8 +1,8 @@
 package com.dev.nicehash.app.presenters
 
 import android.annotation.SuppressLint
+import com.dev.nicehash.app.servers.ExchangeCode
 import com.dev.nicehash.app.servers.ExchangeServer
-import com.dev.nicehash.app.servers.ExchangeServerImpl
 import com.dev.nicehash.app.views.BalanceView
 import com.dev.nicehash.domain.models.Balance
 import com.dev.nicehash.domain.repositories.MinerRepository
@@ -20,7 +20,7 @@ import java.text.DecimalFormat
 @InjectViewState
 class BalancePresenter(val minerRepository: MinerRepository,
                        val exchangeServer: ExchangeServer, val moneyRepository: MoneyRepository,
-                       val currency: ExchangeServerImpl.ExchangeCode): MvpPresenter<BalanceView>() {
+                       val currency: ExchangeCode): MvpPresenter<BalanceView>() {
     private val TAG = BalancePresenter::class.java.simpleName
 
     @SuppressLint("CheckResult")
@@ -29,7 +29,7 @@ class BalancePresenter(val minerRepository: MinerRepository,
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ unpaid ->
-                    val usd = exchangeServer.convertBtcFor(ExchangeServerImpl.ExchangeCode.US.value, unpaid)
+                    val usd = exchangeServer.convertBtcFor(ExchangeCode.US.value, unpaid)
                     viewState.setupBarItems(unpaid = DecimalFormat("##.######").format(unpaid),
                             usd = DecimalFormat("##.##").format(usd))
                 }, { error ->

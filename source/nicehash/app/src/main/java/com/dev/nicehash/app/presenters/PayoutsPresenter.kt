@@ -2,12 +2,11 @@ package com.dev.nicehash.app.presenters
 
 import android.annotation.SuppressLint
 import android.os.Handler
+import com.dev.nicehash.app.servers.ExchangeCode
 import com.dev.nicehash.app.servers.ExchangeServer
-import com.dev.nicehash.app.servers.ExchangeServerImpl
 import com.dev.nicehash.app.views.PayoutsView
 import com.dev.nicehash.domain.models.Payout
 import com.dev.nicehash.domain.repositories.MinerRepository
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import moxy.InjectViewState
@@ -44,7 +43,7 @@ class PayoutsPresenter(val minerRepository: MinerRepository, val exchangeServer:
                             val handler = Handler()
                             thread {
                                 val sum: Double = response.sumByDouble { it.payBtc }
-                                val usd = exchangeServer.convertBtcFor(code = ExchangeServerImpl.ExchangeCode
+                                val usd = exchangeServer.convertBtcFor(code = ExchangeCode
                                         .US.value, value = sum)
 
                                 handler.post {

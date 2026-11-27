@@ -3,7 +3,6 @@ package com.dev.nicehash.app.activities
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +18,6 @@ import com.dev.nicehash.app.App
 import com.dev.nicehash.app.fragments.*
 import com.dev.nicehash.app.interfaces.RouterProvider
 import com.dev.nicehash.app.presenters.MainPresenter
-import com.dev.nicehash.app.servers.ExchangeServer
-import com.dev.nicehash.app.servers.ExchangeServerImpl
 import com.dev.nicehash.app.views.MainView
 import com.dev.nicehash.base.BaseActivity
 import com.dev.nicehash.databinding.ActivityMainBinding
@@ -29,7 +26,6 @@ import com.dev.nicehash.domain.models.Configuration
 import com.dev.nicehash.domain.repositories.MinerRepository
 import com.dev.nicehash.enums.Keys
 import com.dev.nicehash.enums.ScreenKeys
-import com.dev.nicehash.enums.Theme
 import com.dev.nicehash.helpers.PaintUtils
 import com.dev.nicehash.helpers.SizeContract
 import com.dev.nicehash.helpers.WindowUtils
@@ -61,7 +57,6 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
     @Inject lateinit var routerMain: Router
     @Inject lateinit var navigatorHolder: NavigatorHolder
     @Inject lateinit var minerRepository: MinerRepository
-    @Inject lateinit var exchangeServer: ExchangeServer
 
     // MARK: - Presenter setup
     @InjectPresenter
@@ -74,6 +69,7 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
     private var balanceFragment: BalanceFragment? = null
     private var payoutsFragment: PayoutsFragment? = null
     private var workersFragment: WorkersFragment? = null
+    private var marketFragment: MarketFragment? = null
 
     // MARK: - Variables
     private var currentPosition = 0
@@ -95,7 +91,6 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
     private fun applyCommand(command: Command) {
         when (command) {
             is Back -> finish()
-//            is SystemMessage -> Toast.makeText(applicationContext, command.message, Toast.LENGTH_SHORT).show()
             is Replace -> {
                 when (command.screen.screenKey) {
                     ScreenKeys.Choose.value -> {
@@ -103,52 +98,6 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                         chooseIntent.putExtra(Keys.Configuration.value, currentConfiguration)
                         startActivity(chooseIntent)
                         overridePendingTransition(0, 0)
-                    }
-
-                    ScreenKeys.Detail.value -> {
-//                        val balance = (command.transitionData as? Balance)
-//                        balance.let {
-//                            val detailIntent = Intent(applicationContext, DetailActivity::class.java)
-//                            detailIntent.putExtra(Keys.Balance.value, it)
-//                            startActivity(detailIntent)
-//                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-//                        }
-                    }
-
-                    ScreenKeys.Income.value -> {
-//                        supportFragmentManager.beginTransaction()
-//                                .detach(balanceFragment)
-//                                .detach(payoutsFragment)
-//                                .detach(workersFragment)
-//                                .attach(incomeFragment)
-//                                .commitNow()
-                    }
-
-                    ScreenKeys.Balance.value -> {
-//                        supportFragmentManager.beginTransaction()
-//                                .detach(incomeFragment)
-//                                .detach(payoutsFragment)
-//                                .detach(workersFragment)
-//                                .attach(balanceFragment)
-//                                .commitNow()
-                    }
-
-                    ScreenKeys.Payouts.value -> {
-//                        supportFragmentManager.beginTransaction()
-//                                .detach(balanceFragment)
-//                                .detach(incomeFragment)
-//                                .detach(workersFragment)
-//                                .attach(payoutsFragment)
-//                                .commitNow()
-                    }
-
-                    ScreenKeys.Workers.value -> {
-//                        supportFragmentManager.beginTransaction()
-//                                .detach(balanceFragment)
-//                                .detach(payoutsFragment)
-//                                .detach(incomeFragment)
-//                                .attach(workersFragment)
-//                                .commitNow()
                     }
                 }
             }
@@ -203,6 +152,7 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                 .add("", DummyFragment::class.java)
                 .add("", DummyFragment::class.java)
                 .add("", DummyFragment::class.java)
+                .add("", DummyFragment::class.java)
                 .create())
 
         binding.stbMain.setCustomTabView(this)
@@ -225,6 +175,7 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                     1 -> textView.text = getString(R.string.tab_balance)
                     2 -> textView.text = getString(R.string.tab_payouts)
                     3 -> textView.text = getString(R.string.tab_workers)
+                    4 -> textView.text = getString(R.string.tab_market)
                 }
 
                 oldView.background = ContextCompat.getDrawable(applicationContext,
@@ -357,6 +308,15 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                     .detach(workersFragment!!)
                     .commitNow()
         }
+
+        marketFragment = supportFragmentManager.findFragmentByTag(ScreenKeys.Market.value) as? MarketFragment
+        if (marketFragment == null) {
+            marketFragment = MarketFragment.getNewInstance(name = ScreenKeys.Market.value)
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.flMain, marketFragment!!, ScreenKeys.Market.value)
+                    .detach(marketFragment!!)
+                    .commitNow()
+        }
     }
 
     override fun onResumeFragments() {
@@ -411,6 +371,7 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
             1 -> textView.text = getString(R.string.tab_balance)
             2 -> textView.text = getString(R.string.tab_payouts)
             3 -> textView.text = getString(R.string.tab_workers)
+            4 -> textView.text = getString(R.string.tab_market)
         }
 
         if (currentPosition != position) textView.alpha = 0.3f
@@ -442,6 +403,10 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                 binding.txtMainNavLeftSubtitle.text = getString(R.string.navigation_bar_workers_left)
                 binding.txtMainNavRightSubtitle.text = getString(R.string.navigation_bar_workers_right)
             }
+            4 -> {
+                binding.txtMainNavLeftSubtitle.text = getString(R.string.navigation_bar_market_left)
+                binding.txtMainNavRightSubtitle.text = getString(R.string.navigation_bar_market_right)
+            }
         }
     }
 
@@ -461,6 +426,8 @@ class MainActivity : BaseActivity(), MainView, RouterProvider, SmartTabLayout.Ta
                     bottomBlockHeight = WindowUtils.convertDpToPixel(63f + 63f + 40f, applicationContext),
                     topBlockHeight = WindowUtils.convertDpToPixel(72f + 40f + 80f, applicationContext))
             3 -> mainPresenter.measureChartHeight(screenHeight = screenHeight.toFloat(),
+                    bottomBlockHeight = 0f, topBlockHeight = 0f)
+            4 -> mainPresenter.measureChartHeight(screenHeight = screenHeight.toFloat(),
                     bottomBlockHeight = 0f, topBlockHeight = 0f)
         }
 

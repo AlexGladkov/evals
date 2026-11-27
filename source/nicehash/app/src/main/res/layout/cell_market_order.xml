@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/txtMarketOrderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:includeFontPadding="false"
+            android:layout_marginTop="11dp"
+            android:layout_marginStart="16dp"
+            android:textSize="12sp"
+            android:textColor="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/txtMarketOrderAlgo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:textSize="10sp"
+            android:textColor="@color/text_color_hint"
+            tools:ignore="SmallSp" />
+
+        <TextView
+            android:id="@+id/txtMarketOrderAlive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:textSize="10sp"
+            android:textColor="?attr/textColorPrimary"
+            tools:ignore="SmallSp" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="11dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/market_order_price"
+                android:includeFontPadding="false"
+                android:textSize="12sp"
+                android:textColor="@color/text_color_hint" />
+
+            <TextView
+                android:id="@+id/txtMarketOrderPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:includeFontPadding="false"
+                android:layout_marginTop="2dp"
+                android:textColor="?attr/textColorPrimary"
+                android:fontFamily="sans-serif-medium" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="16dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/market_order_speed"
+                android:includeFontPadding="false"
+                android:textSize="12sp"
+                android:textColor="@color/text_color_hint" />
+
+            <TextView
+                android:id="@+id/txtMarketOrderSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:includeFontPadding="false"
+                android:layout_marginTop="2dp"
+                android:textColor="?attr/textColorPrimary"
+                android:fontFamily="sans-serif-medium" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -8,7 +8,6 @@ import com.dev.nicehash.app.presenters.StatusPresenter
 import com.dev.nicehash.app.views.StatusView
 import com.dev.nicehash.base.BaseActivity
 import com.dev.nicehash.domain.models.Status
-import com.dev.nicehash.helpers.ListConfig
 import moxy.presenter.InjectPresenter
 
 /**
@@ -25,15 +24,6 @@ class ServiceStatusActivity: BaseActivity(), StatusView {
         App.appComponent.inject(activity = this@ServiceStatusActivity)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service_status)
-
-//        imgServiceBack.setOnClickListener { onBackPressed() }
-
-        val listConfig = ListConfig.Builder(adapter = mAdapter)
-                .setHasFixedSize(isFixedSize = true)
-                .setHasNestedScroll(isNestedScroll = false)
-                .build(context = this@ServiceStatusActivity)
-
-//        listConfig.applyConfig(context = this@ServiceStatusActivity, recyclerView = recyclerServiceStatus)
 
         statusPresenter.fetchStatuses()
     }

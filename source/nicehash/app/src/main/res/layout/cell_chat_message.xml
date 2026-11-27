@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="4dp"
+    android:paddingEnd="12dp"
+    android:paddingStart="12dp"
+    android:paddingTop="4dp">
+
+    <!-- Bot / error bubble (start-aligned) -->
+    <TextView
+        android:id="@+id/txt_chat_bot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:background="@drawable/chat_bubble_bot"
+        android:maxWidth="260dp"
+        android:paddingBottom="8dp"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:textColor="?attr/textColorPrimary"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:text="Echo reply" />
+
+    <!-- User bubble (end-aligned) -->
+    <TextView
+        android:id="@+id/txt_chat_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="@drawable/chat_bubble_user"
+        android:maxWidth="260dp"
+        android:paddingBottom="8dp"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:text="Hello support" />
+</FrameLayout>

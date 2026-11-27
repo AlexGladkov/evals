@@ -40,4 +40,9 @@ class ConverterModule {
     fun provideExchangeRateConverter(): ExchangeRateConverter {
         return ExchangeRateConverterImpl()
     }
+
+    @Provides
+    fun provideMarketConverter(): MarketConverter {
+        return MarketConverterImpl()
+    }
 }

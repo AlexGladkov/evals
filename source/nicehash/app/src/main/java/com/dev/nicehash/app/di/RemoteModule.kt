@@ -1,8 +1,8 @@
 package com.dev.nicehash.app.di
 
 import com.dev.nicehash.contracts.RemoteContract
+import com.dev.nicehash.data.providers.services.ChatService
 import com.dev.nicehash.data.providers.services.RemoteCurrencyService
-import com.dev.nicehash.data.providers.services.RemoteGeneralService
 import com.dev.nicehash.data.providers.services.RemoteMinerService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -29,34 +29,39 @@ class RemoteModule {
                     .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     .build()
 
-    @Provides @Singleton fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
+    // Single place for retrofit configuration to avoid duplicated builders (DRY)
+    private fun buildRetrofit(baseUrl: String, gson: Gson, okHttpClient: OkHttpClient): Retrofit =
             Retrofit.Builder()
-                    .baseUrl(RemoteContract.baseUrl)
+                    .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(okHttpClient)
                     .build()
 
-    @Provides
-    @Singleton
-    fun provideRemoteCurrencyService(gson: Gson, okHttpClient: OkHttpClient): RemoteCurrencyService {
-        val retrofit = Retrofit.Builder()
-                .baseUrl("https://blockchain.info/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(okHttpClient)
-                .build()
-
-        return retrofit.create(RemoteCurrencyService::class.java)
-    }
+    @Provides @Singleton fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
+            buildRetrofit(baseUrl = RemoteContract.baseUrl, gson = gson, okHttpClient = okHttpClient)
 
     @Provides
     @Singleton
-    fun provideRemoteGeneralService(retrofit: Retrofit): RemoteGeneralService =
-            retrofit.create(RemoteGeneralService::class.java)
+    fun provideRemoteCurrencyService(gson: Gson, okHttpClient: OkHttpClient): RemoteCurrencyService =
+            buildRetrofit(baseUrl = RemoteContract.baseUrlCurrency, gson = gson, okHttpClient = okHttpClient)
+                    .create(RemoteCurrencyService::class.java)
 
     @Provides
     @Singleton
     fun provideRemoteMinerService(retrofit: Retrofit): RemoteMinerService =
             retrofit.create(RemoteMinerService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideChatService(gson: Gson, okHttpClient: OkHttpClient): ChatService {
+        val retrofit = Retrofit.Builder()
+                .baseUrl(RemoteContract.chatBaseUrl)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(okHttpClient)
+                .build()
+
+        return retrofit.create(ChatService::class.java)
+    }
 }
