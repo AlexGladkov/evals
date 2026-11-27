@@ -8,19 +8,10 @@ import com.dev.nicehash.data.providers.models.ApiProviderEx
 import io.reactivex.Single
 
 /**
- * Fake [NicehashProvider] for JVM unit tests.
- *
- * Returns the canned [ApiProviderEx] response given to the constructor and records the
- * arguments of the last [fetchStatsProviderEx] call so tests can assert on them.
- * The remaining endpoints are not used by
- * [com.dev.nicehash.data.implementations.MoneyRepositoryImpl] and fail fast.
+ * Fake [NicehashProvider] for unit tests. Returns canned [ApiProviderEx] data
+ * and fails fast on any other endpoint.
  */
 class FakeNicehashProvider(private val providerEx: ApiProviderEx) : NicehashProvider {
-
-    var lastMiner: String? = null
-        private set
-    var lastFrom: Long = Long.MIN_VALUE
-        private set
 
     override fun fetchGlobalCurrent(): Single<ApiGlobalCurrent> {
         return Single.error(UnsupportedOperationException("Not used in tests"))
@@ -35,8 +26,6 @@ class FakeNicehashProvider(private val providerEx: ApiProviderEx) : NicehashProv
     }
 
     override fun fetchStatsProviderEx(miner: String, from: Long): Single<ApiProviderEx> {
-        lastMiner = miner
-        lastFrom = from
         return Single.just(providerEx)
     }
 

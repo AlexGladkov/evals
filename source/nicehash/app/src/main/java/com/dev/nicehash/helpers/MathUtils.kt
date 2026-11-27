@@ -7,6 +7,7 @@ class MathUtils {
 
     companion object {
         fun getAverage(collection: Collection<Double>): Double {
+            if (collection.isEmpty()) return 0.0
             return collection.sum() / collection.size
         }
     }
