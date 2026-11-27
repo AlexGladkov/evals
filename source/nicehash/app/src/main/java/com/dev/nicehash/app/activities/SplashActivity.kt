@@ -7,14 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dev.nicehash.R
 import com.dev.nicehash.app.App
 import com.dev.nicehash.app.presenters.SplashPresenter
-import com.dev.nicehash.app.servers.ExchangeServer
 import com.dev.nicehash.app.views.SplashView
 import com.dev.nicehash.base.BaseActivity
 import com.dev.nicehash.domain.models.Configuration
 import com.dev.nicehash.domain.models.Miner
 import com.dev.nicehash.domain.repositories.ConfigurationRepository
 import com.dev.nicehash.domain.repositories.CurrencyRepository
-import com.dev.nicehash.domain.repositories.GeneralRepository
 import com.dev.nicehash.domain.repositories.MinerRepository
 import com.dev.nicehash.enums.Keys
 import moxy.presenter.InjectPresenter
@@ -28,12 +26,10 @@ import javax.inject.Inject
 class SplashActivity : BaseActivity(), SplashView {
     private val TAG = SplashActivity::class.java.simpleName
 
-//    // MARK: - Presenter setup
+    // MARK: - Injects
     @Inject lateinit var configurationRepository: ConfigurationRepository
     @Inject lateinit var minerRepository: MinerRepository
-    @Inject lateinit var generalRepository: GeneralRepository
-    @Inject lateinit var currencyRepositorry: CurrencyRepository
-    @Inject lateinit var exchangeServer: ExchangeServer
+    @Inject lateinit var currencyRepository: CurrencyRepository
 
     @InjectPresenter
     lateinit var splashPresenter: SplashPresenter
@@ -50,7 +46,7 @@ class SplashActivity : BaseActivity(), SplashView {
         setContentView(R.layout.activity_splash)
 
         splashPresenter.fetchConfiguration()
-        currencyRepositorry.fetchExchangeRates()
+        currencyRepository.fetchExchangeRates()
     }
 
     // MARK: - View implementation

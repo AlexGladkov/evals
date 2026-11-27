@@ -52,8 +52,4 @@ class CurrencyRepositoryImpl(private val exchangeRateConverter: ExchangeRateConv
                     })
         }
     }
-
-    override fun updateExchangeRate(exchangeRate: ExchangeRate): Single<Boolean> {
-        return Single.just(true)
-    }
 }

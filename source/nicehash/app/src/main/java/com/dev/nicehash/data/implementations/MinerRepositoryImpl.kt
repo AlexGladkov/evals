@@ -25,14 +25,17 @@ class MinerRepositoryImpl(val appDataSource: RoomAppDataSource, val minerProvide
                           private val balanceConverter: BalanceConverter, private val workerConverter: WorkerConverter) : MinerRepository {
     private val TAG: String = MinerRepositoryImpl::class.java.simpleName
 
+    companion object {
+        // Demo wallet used for statistics warm-up request (kept identical to previous inline literal)
+        private const val DEMO_MINER_ADDRESS = "3Aqj4o27ixprba67GvBctDkXijxxpbD4hS"
+    }
+
     override fun fetchMinerStatistics() {
-        minerProvider.getBalance(miner = "3Aqj4o27ixprba67GvBctDkXijxxpbD4hS")
+        minerProvider.getBalance(miner = DEMO_MINER_ADDRESS)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-                    //                    Log.e(TAG, "response $response")
                 }, { error ->
-                    //                    Log.e(TAG, "error $error")
                 })
     }
 

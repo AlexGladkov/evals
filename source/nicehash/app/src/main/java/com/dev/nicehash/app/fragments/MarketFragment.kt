@@ -19,7 +19,6 @@ import com.dev.nicehash.domain.repositories.MarketRepository
 import com.dev.nicehash.enums.Keys
 import com.dev.nicehash.helpers.ListConfig
 import com.github.rahatarmanahmed.cpv.CircularProgressView
-import com.github.terrakok.cicerone.Navigator
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
@@ -63,7 +62,6 @@ class MarketFragment: BaseContainer(), MarketView {
         super.onCreate(savedInstanceState)
     }
 
-    private var navigator: Navigator? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_market, container, false)
     }
@@ -87,10 +85,6 @@ class MarketFragment: BaseContainer(), MarketView {
         marketPresenter.fetchOrders()
 
         (activity as? MainView)?.displayNavigationInfo(leftValue = "", rightValue = "")
-    }
-
-    override fun getNavigator(): Navigator? {
-        return null
     }
 
     // MARK: - Base implementation

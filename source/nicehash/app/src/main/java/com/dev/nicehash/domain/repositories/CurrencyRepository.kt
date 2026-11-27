@@ -10,5 +10,4 @@ import io.reactivex.Single
 interface CurrencyRepository {
     fun fetchExchangeRates(): Single<List<ExchangeRate>>
     fun fetchExchangeRatesFromDB(): Single<List<ExchangeRate>>
-    fun updateExchangeRate(exchangeRate: ExchangeRate): Single<Boolean>
 }

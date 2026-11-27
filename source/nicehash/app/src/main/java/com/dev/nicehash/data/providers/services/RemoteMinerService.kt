@@ -19,16 +19,16 @@ interface RemoteMinerService {
     fun getStatsGlobal24H(): Single<ApiResponse>
 
     @GET("./api")
-    fun getStatsProvider(@Query(RemoteContract.METHOD) method: String = "stats.provider",
+    fun getStatsProvider(@Query(RemoteContract.METHOD) method: String = RemoteContract.METHOD_STATS_PROVIDER,
                          @Query(RemoteContract.MINER) miner: String): Single<ApiResponse>
 
     @GET("./api")
-    fun getStatsProviderEx(@Query(RemoteContract.METHOD) method: String = "stats.provider.ex",
+    fun getStatsProviderEx(@Query(RemoteContract.METHOD) method: String = RemoteContract.METHOD_STATS_PROVIDER_EX,
                            @Query(RemoteContract.MINER) miner: String,
                            @Query(RemoteContract.FROM) from: Long): Single<ApiResponse>
 
     @GET("./api")
-    fun getStatsProviderPayments(@Query(RemoteContract.METHOD) method: String = "stats.provider.payments",
+    fun getStatsProviderPayments(@Query(RemoteContract.METHOD) method: String = RemoteContract.METHOD_STATS_PROVIDER_PAYMENTS,
                                  @Query(RemoteContract.MINER) miner: String,
                                  @Query(RemoteContract.FROM) from: Long): Single<ApiResponse>
 

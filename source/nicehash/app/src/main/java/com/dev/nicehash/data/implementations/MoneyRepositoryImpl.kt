@@ -1,16 +1,11 @@
 package com.dev.nicehash.data.implementations
 
-import android.util.Log
 import com.dev.nicehash.data.providers.NicehashProvider
 import com.dev.nicehash.domain.IncomeCalculator
 import com.dev.nicehash.domain.models.Income
 import com.dev.nicehash.domain.repositories.MoneyRepository
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import org.joda.time.DateTime
-import org.joda.time.LocalDateTime
-import java.util.*
 
 /**
  * Created by Alex Gladkov on 11/10/2018.
