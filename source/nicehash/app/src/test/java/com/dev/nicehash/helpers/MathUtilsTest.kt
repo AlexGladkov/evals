@@ -46,16 +46,16 @@ class MathUtilsTest {
      * 0.0 / 0 which yields NaN instead of a well-defined average of 0.0.
      * Expected behavior once fixed:
      */
-    @Ignore("Known bug: getAverage(emptyList()) returns NaN on the current code (0.0 / 0.0)")
     @Test
-    fun averageOfEmptyCollectionShouldBeZero() {
+    fun averageOfEmptyCollectionShouldBeZero() { // active since task/c2 (fixed in C2)
         assertEquals(0.0, MathUtils.getAverage(collection = emptyList()), 0.0)
     }
 
     /**
-     * Characterization test pinning the CURRENT (buggy) behavior for empty input:
-     * NaN. Flip it together with [averageOfEmptyCollectionShouldBeZero] once fixed.
+     * Characterization test pinning the OLD (buggy) behavior for empty input: NaN.
+     * Fixed in C2: empty collection now yields 0.0, see [averageOfEmptyCollectionShouldBeZero].
      */
+    @Ignore("fixed in C2: getAverage(emptyList()) returns 0.0 now")
     @Test
     fun averageOfEmptyCollectionReturnsNaNOnCurrentCode() {
         assertTrue(MathUtils.getAverage(collection = emptyList()).isNaN())
