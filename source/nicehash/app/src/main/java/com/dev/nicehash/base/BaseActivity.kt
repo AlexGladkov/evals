@@ -6,6 +6,8 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import com.dev.nicehash.R
 import com.dev.nicehash.app.App
+import com.dev.nicehash.enums.statusBarColorRes
+import com.dev.nicehash.enums.styleRes
 import android.app.Activity
 import android.graphics.Color
 import io.reactivex.disposables.CompositeDisposable

@@ -9,6 +9,7 @@ import com.dev.nicehash.app.presenters.ThemesPresenter
 import com.dev.nicehash.app.views.ThemesView
 import com.dev.nicehash.domain.repositories.ConfigurationRepository
 import com.dev.nicehash.enums.Keys
+import com.dev.nicehash.enums.styleRes
 import com.github.terrakok.cicerone.NavigatorHolder
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter

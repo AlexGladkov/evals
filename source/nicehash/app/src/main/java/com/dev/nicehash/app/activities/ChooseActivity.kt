@@ -17,6 +17,7 @@ import com.dev.nicehash.domain.models.Miner
 import com.dev.nicehash.domain.repositories.ConfigurationRepository
 import com.dev.nicehash.domain.repositories.MinerRepository
 import com.dev.nicehash.enums.Keys
+import com.dev.nicehash.enums.statusBarColorRes
 import com.dev.nicehash.enums.ScreenKeys
 import com.github.terrakok.cicerone.Back
 import com.github.terrakok.cicerone.Command
