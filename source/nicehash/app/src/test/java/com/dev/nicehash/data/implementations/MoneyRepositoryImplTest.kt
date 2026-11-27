@@ -6,7 +6,9 @@ import com.dev.nicehash.data.providers.models.ApiProviderData
 import com.dev.nicehash.data.providers.models.ApiProviderEx
 import com.dev.nicehash.data.providers.models.ApiProviderPast
 import com.dev.nicehash.data.providers.models.ApiProviderPastData
+import com.dev.nicehash.domain.IncomeCalculator
 import com.dev.nicehash.domain.models.Income
+import com.google.gson.Gson
 import org.joda.time.DateTime
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -19,6 +21,16 @@ import org.junit.Test
  * no NaN or Infinity on empty data or zero speed, and real month days.
  */
 class MoneyRepositoryImplTest {
+
+    /**
+     * Integration note: since c5 the repository delegates math to IncomeCalculator,
+     * and since a5 it carries a Room cache (not exercised by these math tests —
+     * a plain fake DAO is injected so the cache writes succeed silently).
+     */
+    private fun buildRepository(provider: com.dev.nicehash.data.providers.FakeNicehashProvider): MoneyRepositoryImpl {
+        return MoneyRepositoryImpl(nicehashProvider = provider, incomeCalculator = IncomeCalculator(),
+                cachedStatsDao = FakeCachedStatsDao(), gson = Gson())
+    }
 
     private companion object {
         const val WALLET = "test-wallet"
@@ -60,7 +72,7 @@ class MoneyRepositoryImplTest {
      */
     @Test
     fun incomeIsAllZerosOnEmptyData() {
-        val repository = MoneyRepositoryImpl(FakeNicehashProvider(providerEx(current = emptyList(),
+        val repository = buildRepository(FakeNicehashProvider(providerEx(current = emptyList(),
                 past = emptyList())))
 
         val income = repository.fetchMinerIncome(miner = WALLET).blockingGet()
@@ -82,7 +94,7 @@ class MoneyRepositoryImplTest {
         // algo 20 is healthy: a=5.0 with speed 10.0 and price 100.0 -> bucket 500.0
         val interval30 = intervalFor(minusMinutes = 10)
         val interval20 = intervalFor(minusMinutes = 20)
-        val repository = MoneyRepositoryImpl(FakeNicehashProvider(providerEx(
+        val repository = buildRepository(FakeNicehashProvider(providerEx(
                 current = listOf(current(algo = 30, profitability = 100.0, speed = 0.0f),
                         current(algo = 20, profitability = 100.0, speed = 10.0f)),
                 past = listOf(ApiProviderPast(algo = 30,
@@ -108,7 +120,7 @@ class MoneyRepositoryImplTest {
     @Test
     fun monthBtcUsesRealNumberOfDaysInCurrentMonth() {
         val monthDaysBefore = DateTime().dayOfMonth().getMaximumValue()
-        val repository = MoneyRepositoryImpl(FakeNicehashProvider(providerEx(
+        val repository = buildRepository(FakeNicehashProvider(providerEx(
                 current = listOf(current(algo = 20, profitability = 100.0, speed = 10.0f)),
                 past = listOf(ApiProviderPast(algo = 20,
                         data = listOf(pastDataAt(interval = intervalFor(minusMinutes = 10), a = 10.0f)))))))
@@ -133,7 +145,7 @@ class MoneyRepositoryImplTest {
         // algo 20 at interval1: a=5.0, speed=10.0, price=100.0 -> 0.5 * 1000.0 = 500.0
         // algo 21 at interval1: a=10.0, speed=10.0, price=50.0 -> 1.0 * 500.0 = 500.0 (accumulates to 1000.0)
         // algo 20 at interval2: a=15.0 -> 1.5 * 1000.0 = 1500.0
-        val repository = MoneyRepositoryImpl(FakeNicehashProvider(providerEx(
+        val repository = buildRepository(FakeNicehashProvider(providerEx(
                 current = listOf(current(algo = 20, profitability = 100.0, speed = 10.0f),
                         current(algo = 21, profitability = 50.0, speed = 10.0f)),
                 past = listOf(ApiProviderPast(algo = 20,
@@ -156,7 +168,7 @@ class MoneyRepositoryImplTest {
      */
     @Test
     fun unpaidMoneyIsSumAcrossAlgorithms() {
-        val repository = MoneyRepositoryImpl(FakeNicehashProvider(providerEx(
+        val repository = buildRepository(FakeNicehashProvider(providerEx(
                 current = listOf(current(algo = 0, profitability = 1.0, speed = 1.0f, unpaid = 1.5),
                         current(algo = 1, profitability = 2.0, speed = 1.0f, unpaid = 2.25)),
                 past = emptyList())))

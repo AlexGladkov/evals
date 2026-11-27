@@ -152,5 +152,7 @@
     <string name="navigation_bar_market_left">Open orders</string>
     <string name="navigation_bar_market_right">Active orders</string>
     <string name="navigation_bar_income_left">BTC/Day</string>
+    <string name="offline_no_cached_data">Offline — no cached data yet. Reconnect to refresh.</string>
+    <string name="income_cached_data">Data from %1$s</string>
 
 </resources>

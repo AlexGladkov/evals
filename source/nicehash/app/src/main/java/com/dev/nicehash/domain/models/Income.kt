@@ -5,4 +5,5 @@ package com.dev.nicehash.domain.models
  * Model for income tab (domain)
  */
 data class Income(var hourValue: Double, val hourBtc: Double, var dayValue: Double, val dayBtc: Double,
-                  var weekValue: Double, val weekBtc: Double, var monthValue: Double, val monthBtc: Double)
+                  var weekValue: Double, val weekBtc: Double, var monthValue: Double, val monthBtc: Double,
+                  val cachedAt: Long? = null)

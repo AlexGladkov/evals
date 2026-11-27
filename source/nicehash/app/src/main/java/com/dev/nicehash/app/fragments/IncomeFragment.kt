@@ -1,7 +1,5 @@
 package com.dev.nicehash.app.fragments
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -28,7 +26,6 @@ import com.dev.nicehash.base.BaseContainer
 import com.dev.nicehash.domain.models.Income
 import com.dev.nicehash.domain.repositories.MoneyRepository
 import com.dev.nicehash.enums.Keys
-import com.github.terrakok.cicerone.Navigator
 import java.text.DecimalFormat
 import javax.inject.Inject
 
@@ -73,7 +70,6 @@ class IncomeFragment : BaseContainer() {
         super.onCreate(savedInstanceState)
     }
 
-    private var navigator: Navigator? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Use ComposeView with late content setting to avoid ViewTreeLifecycleOwner crash
         // (same approach as AboutActivity).
@@ -93,35 +89,6 @@ class IncomeFragment : BaseContainer() {
         incomeViewModel.fetchIncome(currencyCode = ExchangeServerImpl.ExchangeCode.US.value,
                 currencyValue = ExchangeServerImpl.ExchangeCode.Ru.value,
                 miner = arguments?.getString(Keys.Miner.value).orEmpty())
-    }
-
-    override fun getNavigator(): Navigator? {
-//        return if (navigator == null) {
-//            navigator = object: SupportAppNavigator(activity, childFragmentManager, R.id.container) {
-//                override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent? {
-//                    return when (screenKey) {
-//                        else -> null
-//                    }
-//                }
-//
-//                override fun createFragment(screenKey: String, data: Any?): Fragment? {
-//                    return when (screenKey) {
-//                        else -> null
-//                    }
-//                }
-//
-//                override fun exit() {
-//                    super.exit()
-//                    activity?.let { (it as RouterProvider).getRouter().exit() }
-//                }
-//            }
-//
-//            navigator as SupportAppNavigator
-//        } else {
-//            navigator!!
-//        }
-
-        return null
     }
 
     // MARK: - Base implementation

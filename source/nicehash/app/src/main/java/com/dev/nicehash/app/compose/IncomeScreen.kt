@@ -29,6 +29,9 @@ import com.dev.nicehash.app.viewmodels.IncomeViewModel
 import com.dev.nicehash.domain.models.Income
 import kotlinx.coroutines.flow.StateFlow
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * Income tab screen in Jetpack Compose. Replicates the former fragment_income.xml layout:
@@ -81,7 +84,8 @@ fun IncomeScreen(
                     monthValue = DecimalFormat("##.##").format(uiState.income.monthValue),
                     monthBtc = DecimalFormat("##.########").format(uiState.income.monthBtc),
                     usdRate = " ${DecimalFormat("##.##").format(uiState.usdRate)}",
-                    currencyRate = DecimalFormat("##.##").format(uiState.currencyRate)
+                    currencyRate = DecimalFormat("##.##").format(uiState.currencyRate),
+                    cachedAt = uiState.income.cachedAt
                 )
             }
             is IncomeViewModel.UiState.Error -> {
@@ -122,7 +126,8 @@ private fun IncomeContent(
     monthValue: String = "",
     monthBtc: String = "",
     usdRate: String = "",
-    currencyRate: String = ""
+    currencyRate: String = "",
+    cachedAt: Long? = null
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -234,6 +239,22 @@ private fun IncomeContent(
         }
 
         DividerLine(colorRes = dividerColorRes, heightDp = 1f)
+
+        // Offline freshness indicator (a5 cache-then-network): when the repository
+        // served stats from the Room cache, income.cachedAt is non-null and we
+        // render a small "Data from <time>" hint ("Data from <time>" indicator, a5 doc).
+        if (cachedAt != null) {
+            Text(
+                text = stringResource(id = R.string.income_cached_data,
+                        SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(cachedAt))),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp, bottom = 4.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 11.sp,
+                color = colorResource(id = textHintRes)
+            )
+        }
     }
 }
 

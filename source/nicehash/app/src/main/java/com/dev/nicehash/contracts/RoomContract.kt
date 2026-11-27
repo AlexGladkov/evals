@@ -12,5 +12,10 @@ class RoomContract {
         const val TABLE_MINERS = "miners"
         const val TABLE_CONFIGURATIONS = "configurations"
         const val TABLE_CURRENCY = "currency"
+
+        // offline-first cache tables (cache-then-network)
+        const val TABLE_CACHED_STATS = "cached_stats"
+        const val TABLE_CACHED_WORKERS = "cached_workers"
+        const val TABLE_CACHED_PAYOUTS = "cached_payouts"
     }
 }
