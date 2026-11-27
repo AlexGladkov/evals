@@ -155,4 +155,12 @@
     <string name="offline_no_cached_data">Offline — no cached data yet. Reconnect to refresh.</string>
     <string name="income_cached_data">Data from %1$s</string>
 
+    <!-- Support chat overlay -->
+    <string name="chat_title">Support chat</string>
+    <string name="chat_toggle_desc">Open support chat</string>
+    <string name="chat_close_desc">Close chat</string>
+    <string name="chat_send_desc">Send message</string>
+    <string name="chat_input_hint">Type a message…</string>
+    <string name="chat_error">Message not delivered. Please try again.</string>
+
 </resources>

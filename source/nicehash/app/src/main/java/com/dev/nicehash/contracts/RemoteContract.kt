@@ -10,6 +10,9 @@ class RemoteContract {
         val baseUrl = "https://api2.nicehash.com/main/api/v2/"
         val baseUrlCurrency = "https://blockchain.info/"
 
+        /** Base url for the support chat service (configurable) */
+        val chatBaseUrl = baseUrl
+
         const val METHOD = "method"
         const val MINER = "addr"
         const val FROM = "from"

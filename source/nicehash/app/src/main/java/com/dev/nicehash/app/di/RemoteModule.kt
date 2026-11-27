@@ -1,6 +1,7 @@
 package com.dev.nicehash.app.di
 
 import com.dev.nicehash.contracts.RemoteContract
+import com.dev.nicehash.data.providers.services.ChatService
 import com.dev.nicehash.data.providers.services.RemoteCurrencyService
 import com.dev.nicehash.data.providers.services.RemoteMinerService
 import com.google.gson.Gson
@@ -50,4 +51,17 @@ class RemoteModule {
     @Singleton
     fun provideRemoteMinerService(retrofit: Retrofit): RemoteMinerService =
             retrofit.create(RemoteMinerService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideChatService(gson: Gson, okHttpClient: OkHttpClient): ChatService {
+        val retrofit = Retrofit.Builder()
+                .baseUrl(RemoteContract.chatBaseUrl)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(okHttpClient)
+                .build()
+
+        return retrofit.create(ChatService::class.java)
+    }
 }

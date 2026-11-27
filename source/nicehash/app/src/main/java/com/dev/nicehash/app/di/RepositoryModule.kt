@@ -4,6 +4,7 @@ import com.dev.nicehash.app.servers.ExchangeServer
 import com.dev.nicehash.app.servers.ExchangeServerImpl
 import com.dev.nicehash.data.converters.*
 import com.dev.nicehash.data.implementations.*
+import com.dev.nicehash.data.providers.services.ChatService
 import com.dev.nicehash.data.providers.CurrencyProvider
 import com.dev.nicehash.data.providers.MarketProvider
 import com.dev.nicehash.data.providers.MinerProvider
@@ -77,5 +78,11 @@ class RepositoryModule {
     fun provideMarketRepository(marketProvider: MarketProvider,
                                 marketConverter: MarketConverter): MarketRepository {
         return MarketRepositoryImpl(marketProvider = marketProvider, marketConverter = marketConverter)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatRepository(service: ChatService): ChatRepository {
+        return ChatRepositoryImpl(service = service)
     }
 }
