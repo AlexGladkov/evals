@@ -16,3 +16,4 @@ runs/
 # Secrets на всякий случай
 *.jks
 *.keystore
+.fan/
